@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TargetPro — Aniq Targeting Xizmatlari</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Nunito+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --green: #18c45a;
+    --green-dark: #0fa347;
+    --green-light: #d4f7e3;
+    --gray-100: #f5f6f4;
+    --gray-200: #e8eae5;
+    --gray-400: #9aa096;
+    --white: #ffffff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito Sans', sans-serif;
+    background: var(--white);
+    color: var(--black);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .logo {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800; font-size: 1.4rem;
+    letter-spacing: -0.3px;
+  }
+  .logo span { color: var(--green); }
+  nav ul { list-style: none; display: flex; gap: 2.5rem; }
+  nav ul a {
+    text-decoration: none; color: var(--black);
+    font-size: 0.9rem; font-weight: 500;
+    transition: color .2s;
+  }
+  nav ul a:hover { color: var(--green); }
+  .nav-cta {
+    background: var(--black); color: var(--white) !important;
+    padding: .5rem 1.3rem; border-radius: 50px;
+    transition: background .2s !important;
+  }
+  .nav-cta:hover { background: var(--green) !important; color: var(--black) !important; }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 8rem 4rem 4rem;
+    background: var(--gray-100);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--green);
+    opacity: .08;
+    pointer-events: none;
+  }
+  .circle-1 { width: 600px; height: 600px; top: -150px; right: -120px; }
+  .circle-2 { width: 300px; height: 300px; bottom: 50px; left: 10%; opacity: .05; }
+
+  .hero-inner { max-width: 1100px; margin: 0 auto; width: 100%; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: var(--green-light); color: var(--green-dark);
+    font-size: .8rem; font-weight: 600; letter-spacing: .05em; text-transform: uppercase;
+    padding: .4rem 1rem; border-radius: 50px;
+    margin-bottom: 2rem;
+    animation: fadeUp .6s ease both;
+  }
+  .hero-tag::before { content: '●'; font-size: .5rem; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+  h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(2.6rem, 5.5vw, 5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -1px;
+    max-width: 820px;
+    margin-bottom: 1.8rem;
+    animation: fadeUp .7s .1s ease both;
+  }
+  h1 em { font-style: normal; color: var(--green); }
+
+  .hero-sub {
+    font-size: 1.15rem; color: #4a4a4a; max-width: 520px;
+    line-height: 1.8; margin-bottom: 2.8rem; font-weight: 400;
+    animation: fadeUp .7s .2s ease both;
+  }
+  .hero-btns {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    animation: fadeUp .7s .3s ease both;
+  }
+  .btn-primary {
+    background: var(--green); color: var(--black);
+    font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1rem;
+    padding: .9rem 2.2rem; border-radius: 50px;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 4px 20px rgba(24,196,90,.35);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(24,196,90,.45); }
+  .btn-secondary {
+    background: transparent; color: var(--black);
+    font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1rem;
+    padding: .9rem 2.2rem; border-radius: 50px;
+    border: 2px solid var(--black); text-decoration: none; cursor: pointer;
+    transition: background .2s, color .2s;
+  }
+  .btn-secondary:hover { background: var(--black); color: var(--white); }
+
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 4rem;
+    padding-top: 2.5rem; border-top: 1px solid var(--gray-200);
+    animation: fadeUp .7s .4s ease both;
+  }
+  .stat-num {
+    font-family: 'Outfit', sans-serif; font-size: 2rem; font-weight: 800;
+    color: var(--black);
+  }
+  .stat-num span { color: var(--green); }
+  .stat-label { font-size: .88rem; color: var(--gray-400); margin-top: .2rem; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── SECTION COMMON ─── */
+  section { padding: 6rem 4rem; }
+  .section-label {
+    font-size: .75rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
+    color: var(--green-dark); margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Outfit', sans-serif; font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+    font-weight: 800; letter-spacing: -0.5px; line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .section-sub { color: #555; max-width: 520px; line-height: 1.8; margin-bottom: 3.5rem; font-size: 1rem; }
+  .section-header { max-width: 1100px; margin: 0 auto; }
+
+  /* ─── SERVICES ─── */
+  #services { background: var(--white); }
+  .services-grid {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  }
+  .service-card {
+    background: var(--gray-100);
+    border: 1px solid var(--gray-200);
+    border-radius: 20px;
+    padding: 2.2rem;
+    transition: transform .25s, box-shadow .25s, border-color .25s;
+    position: relative; overflow: hidden;
+  }
+  .service-card::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: var(--green); transform: scaleX(0); transform-origin: left;
+    transition: transform .3s ease;
+  }
+  .service-card:hover::after { transform: scaleX(1); }
+  .service-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(0,0,0,.1);
+    border-color: var(--green);
+  }
+  .service-icon {
+    width: 52px; height: 52px;
+    background: var(--green); border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; margin-bottom: 1.4rem;
+  }
+  .service-card h3 {
+    font-family: 'Outfit', sans-serif; font-size: 1.2rem;
+    font-weight: 700; margin-bottom: .7rem;
+  }
+  .service-card p { font-size: .95rem; color: #555; line-height: 1.8; }
+
+  /* ─── PRICING ─── */
+  #pricing { background: var(--black); color: var(--white); }
+  #pricing .section-label { color: var(--green); }
+  #pricing .section-title { color: var(--white); }
+  #pricing .section-sub { color: #aaa; }
+  .pricing-grid {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  }
+  .pricing-card {
+    background: #161616;
+    border: 1px solid #2a2a2a;
+    border-radius: 24px;
+    padding: 2.5rem;
+    position: relative;
+    transition: border-color .25s, transform .25s;
+  }
+  .pricing-card:hover { border-color: var(--green); transform: translateY(-4px); }
+  .pricing-card.featured {
+    background: var(--green);
+    border-color: var(--green);
+    color: var(--black);
+  }
+  .pricing-card.featured .plan-name { color: var(--black); }
+  .pricing-card.featured .plan-desc { color: rgba(0,0,0,.65); }
+  .pricing-card.featured .feature-item { color: var(--black); }
+  .pricing-card.featured .feature-item::before { color: var(--black); }
+  .badge {
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    background: var(--black); color: var(--green);
+    font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    padding: .3rem .9rem; border-radius: 50px; white-space: nowrap;
+  }
+  .plan-name {
+    font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 700;
+    color: var(--white); margin-bottom: .5rem;
+  }
+  .plan-price {
+    font-family: 'Outfit', sans-serif; font-size: 3rem; font-weight: 800;
+    line-height: 1; margin: 1.2rem 0 .4rem;
+  }
+  .plan-price sup { font-size: 1.2rem; vertical-align: top; margin-top: .6rem; display: inline-block; }
+  .plan-price sub { font-size: 1rem; font-weight: 400; }
+  .plan-desc { font-size: .92rem; color: #888; margin-bottom: 2rem; }
+  .features-list { list-style: none; margin-bottom: 2rem; }
+  .feature-item {
+    font-size: .92rem; color: #ccc; padding: .6rem 0;
+    border-bottom: 1px solid #222; display: flex; align-items: center; gap: .6rem;
+  }
+  .pricing-card.featured .feature-item { border-bottom-color: rgba(0,0,0,.15); }
+  .feature-item::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+  .btn-plan {
+    width: 100%; padding: .9rem;
+    font-family: 'Outfit', sans-serif; font-weight: 700; font-size: .95rem;
+    border-radius: 12px; border: 2px solid var(--green);
+    background: transparent; color: var(--green);
+    cursor: pointer; transition: background .2s, color .2s;
+  }
+  .btn-plan:hover { background: var(--green); color: var(--black); }
+  .pricing-card.featured .btn-plan {
+    background: var(--black); color: var(--white); border-color: var(--black);
+  }
+  .pricing-card.featured .btn-plan:hover { background: #222; }
+
+  /* ─── REGISTRATION ─── */
+  #register {
+    background: var(--gray-100);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .register-wrap {
+    max-width: 1100px; width: 100%; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+  }
+  .register-left .section-sub { margin-bottom: 2rem; }
+  .trust-badges { display: flex; flex-direction: column; gap: .8rem; }
+  .trust-badge {
+    display: flex; align-items: center; gap: .8rem;
+    font-size: .95rem; color: #444;
+  }
+  .trust-badge span {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: var(--green); display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+  }
+
+  .form-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 24px;
+    padding: 2.8rem;
+    box-shadow: 0 12px 50px rgba(0,0,0,.07);
+  }
+  .form-title {
+    font-family: 'Outfit', sans-serif; font-size: 1.4rem; font-weight: 800;
+    margin-bottom: 1.8rem;
+  }
+  .form-group { margin-bottom: 1.2rem; }
+  label {
+    display: block; font-size: .9rem; font-weight: 600;
+    color: #222; margin-bottom: .45rem;
+  }
+  input, select, textarea {
+    width: 100%; padding: .85rem 1rem;
+    border: 1.5px solid var(--gray-200);
+    border-radius: 10px; font-family: 'Nunito Sans', sans-serif;
+    font-size: .97rem; color: var(--black);
+    background: var(--white);
+    transition: border-color .2s, box-shadow .2s;
+    outline: none;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(24,196,90,.12);
+  }
+  textarea { resize: vertical; min-height: 90px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .btn-submit {
+    width: 100%; padding: 1rem;
+    background: var(--green); color: var(--black);
+    font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1rem;
+    border: none; border-radius: 12px; cursor: pointer;
+    margin-top: .5rem;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 4px 20px rgba(24,196,90,.35);
+  }
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(24,196,90,.4); }
+  .btn-submit:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+  #form-msg {
+    text-align: center; font-size: .9rem; font-weight: 600;
+    margin-top: 1rem; padding: .8rem; border-radius: 10px; display: none;
+  }
+  #form-msg.success { background: var(--green-light); color: var(--green-dark); display: block; }
+  #form-msg.error   { background: #fde8e8; color: #c0392b; display: block; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--black); color: #aaa;
+    text-align: center; padding: 2rem 4rem;
+    font-size: .85rem;
+  }
+  footer strong { color: var(--green); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    nav ul { display: none; }
+    section { padding: 4rem 1.5rem; }
+    #hero { padding: 7rem 1.5rem 3rem; }
+    .services-grid, .pricing-grid { grid-template-columns: 1fr; }
+    .register-wrap { grid-template-columns: 1fr; gap: 2.5rem; }
+    .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+
+  /* scroll reveal */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Target<span>Pro</span></div>
+  <ul>
+    <li><a href="#services">Xizmatlar</a></li>
+    <li><a href="#pricing">Tariflar</a></li>
+    <li><a href="#register" class="nav-cta">Ro'yxatdan o'tish</a></li>
+  </ul>
+</nav>
+
+<!-- 1. HERO -->
+<section id="hero">
+  <div class="hero-bg-circle circle-1"></div>
+  <div class="hero-bg-circle circle-2"></div>
+  <div class="hero-inner">
+    <div class="hero-tag">🎯 Reklama Targeting Xizmatlari</div>
+    <h1>Har bir so'm to'g'ri auditoriyaga <em>aniq</em> yetib boradi.</h1>
+    <p class="hero-sub">
+      Biznesimiz uchun maqsadli reklama kampaniyalari — Facebook, Instagram va Google platformalarida natijaga yo'naltirilgan targeting yechimlar.
+    </p>
+    <div class="hero-btns">
+      <a href="#register" class="btn-primary">Hoziroq boshlash →</a>
+      <a href="#services" class="btn-secondary">Xizmatlar haqida</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">500<span>+</span></div>
+        <div class="stat-label">Muvaffaqiyatli kampaniya</div>
+      </div>
+      <div>
+        <div class="stat-num">3.8<span>x</span></div>
+        <div class="stat-label">O'rtacha ROAS ko'rsatkichi</div>
+      </div>
+      <div>
+        <div class="stat-num">98<span>%</span></div>
+        <div class="stat-label">Mijoz qoniqish darajasi</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. SERVICES -->
+<section id="services">
+  <div class="section-header reveal">
+    <div class="section-label">Nimalar taklif qilinadi</div>
+    <h2 class="section-title">Sizning o'sishingiz uchun<br>to'liq targeting ekosistema</h2>
+    <p class="section-sub">Reklama strategiyasidan tortib analitikagacha — har bir jarayonni biz boshqaramiz.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon">🎯</div>
+      <h3>Facebook & Instagram Targeting</h3>
+      <p>Aniq demografik, qiziqish va xulq-atvor ko'rsatkichlari asosida maqsadli auditoriya yaratish va reklama sozlash.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🔍</div>
+      <h3>Google Ads Kampaniyalari</h3>
+      <p>Search, Display va YouTube formatlarida samarali reklama. To'g'ri kalit so'zlar bilan mijozlar oqimini kuchaytirish.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🔄</div>
+      <h3>Retargeting & Lookalike</h3>
+      <p>Saytingizga tashrif buyurgan foydalanuvchilarni qayta jalb qilish va o'xshash auditoriyalarni topish.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">📊</div>
+      <h3>Analitika & Hisobotlar</h3>
+      <p>Kampaniya natijalari bo'yicha batafsil hisobotlar, A/B testlar va konversiya optimizatsiyasi.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">✍️</div>
+      <h3>Kreativ Mazmun</h3>
+      <p>Reklama bannerlari, matnlari va video skriptlarini ishlab chiqish — auditoriyangizni jalb etuvchi kontentlar.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🛡️</div>
+      <h3>Piksel & Konversiya Sozlash</h3>
+      <p>Facebook Pixel, Google Tag Manager va konversiya kuzatuv tizimlarini to'g'ri o'rnatish va konfiguratsiya.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3. PRICING -->
+<section id="pricing">
+  <div class="section-header reveal">
+    <div class="section-label">Tariflar</div>
+    <h2 class="section-title">Sizga mos tarif rejasini tanlang</h2>
+    <p class="section-sub">Har qanday biznes o'lchami uchun shaffof narxlar. Yashirin to'lovlar yo'q.</p>
+  </div>
+  <div class="pricing-grid">
+
+    <div class="pricing-card reveal">
+      <div class="plan-name">Starter</div>
+      <div class="plan-price"><sup>$</sup>199<sub>/oy</sub></div>
+      <p class="plan-desc">Kichik bizneslar va start-uplar uchun</p>
+      <ul class="features-list">
+        <li class="feature-item">1 ta platforma (Facebook yoki Google)</li>
+        <li class="feature-item">Oylik 3 ta reklama kampaniyasi</li>
+        <li class="feature-item">Auditoriya tahlili va sozlash</li>
+        <li class="feature-item">Oylik hisobot</li>
+        <li class="feature-item">Email qo'llab-quvvatlash</li>
+      </ul>
+      <button class="btn-plan" onclick="document.getElementById('register').scrollIntoView({behavior:'smooth'})">Boshlash</button>
+    </div>
+
+    <div class="pricing-card featured reveal">
+      <div class="badge">⭐ Eng Mashhur</div>
+      <div class="plan-name">Growth</div>
+      <div class="plan-price"><sup>$</sup>449<sub>/oy</sub></div>
+      <p class="plan-desc">O'sib borayotgan bizneslar uchun</p>
+      <ul class="features-list">
+        <li class="feature-item">3 ta platforma (Facebook, Instagram, Google)</li>
+        <li class="feature-item">Cheksiz reklama kampaniyalari</li>
+        <li class="feature-item">Retargeting & Lookalike auditoriya</li>
+        <li class="feature-item">A/B test & optimizatsiya</li>
+        <li class="feature-item">Haftalik hisobotlar</li>
+        <li class="feature-item">Dedikatlangan menejer</li>
+      </ul>
+      <button class="btn-plan" onclick="document.getElementById('register').scrollIntoView({behavior:'smooth'})">Boshlash</button>
+    </div>
+
+    <div class="pricing-card reveal">
+      <div class="plan-name">Enterprise</div>
+      <div class="plan-price"><sup>$</sup>899<sub>/oy</sub></div>
+      <p class="plan-desc">Yirik kompaniyalar va agentliklar uchun</p>
+      <ul class="features-list">
+        <li class="feature-item">Barcha platformalar + TikTok Ads</li>
+        <li class="feature-item">Kreativ kontent ishlab chiqish</li>
+        <li class="feature-item">Pixel & konversiya to'liq sozlash</li>
+        <li class="feature-item">Kunlik monitoring va hisobot</li>
+        <li class="feature-item">7/24 qo'llab-quvvatlash</li>
+        <li class="feature-item">Strategik konsultatsiya sessiyalari</li>
+      </ul>
+      <button class="btn-plan" onclick="document.getElementById('register').scrollIntoView({behavior:'smooth'})">Boshlash</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- 4. REGISTER -->
+<section id="register">
+  <div class="register-wrap">
+    <div class="register-left reveal">
+      <div class="section-label">Ro'yxatdan o'tish</div>
+      <h2 class="section-title">Biznesingizni<br>keyingi bosqichga<br>olib chiqamiz</h2>
+      <p class="section-sub">Hoziroq ro'yxatdan o'ting — 24 soat ichida mutaxassisimiz siz bilan bog'lanadi va bepul konsultatsiya beradi.</p>
+      <div class="trust-badges">
+        <div class="trust-badge"><span>🔒</span> Ma'lumotlaringiz xavfsiz saqlanadi</div>
+        <div class="trust-badge"><span>⚡</span> 24 soat ichida javob kafolatlanadi</div>
+        <div class="trust-badge"><span>🎁</span> Birinchi konsultatsiya bepul</div>
+      </div>
+    </div>
+    <div class="form-card reveal">
+      <div class="form-title">Bepul konsultatsiya olish 👋</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="fname">Ismingiz *</label>
+          <input type="text" id="fname" placeholder="Abdulloh" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Telefon *</label>
+          <input type="tel" id="phone" placeholder="+998 90 123 45 67" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email manzil *</label>
+        <input type="email" id="email" placeholder="siz@example.com" required>
+      </div>
+      <div class="form-group">
+        <label for="business">Biznes nomi</label>
+        <input type="text" id="business" placeholder="Kompaniya yoki biznesingiz nomi">
+      </div>
+      <div class="form-group">
+        <label for="tarif">Tarif rejasi</label>
+        <select id="tarif">
+          <option value="">— Tanlang —</option>
+          <option value="Starter">Starter — $199/oy</option>
+          <option value="Growth">Growth — $449/oy ⭐</option>
+          <option value="Enterprise">Enterprise — $899/oy</option>
+          <option value="Maslahatlashish">Avval maslahatlashmoqchiman</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="msg">Qo'shimcha ma'lumot</label>
+        <textarea id="msg" placeholder="Biznesingiz haqida qisqacha..."></textarea>
+      </div>
+      <button class="btn-submit" id="submitBtn" onclick="submitForm()">
+        Ariza yuborish →
+      </button>
+      <div id="form-msg"></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 <strong>TargetPro</strong>. Barcha huquqlar himoyalangan. | Biznesni o'stirishda ishonchli hamkor.</p>
+</footer>
+
+<script>
+  // ── Scroll reveal ──
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+
+  // ── Pricing buttons pre-fill tarif ──
+  document.querySelectorAll('.btn-plan').forEach((btn, i) => {
+    const plans = ['Starter', 'Growth', 'Enterprise'];
+    btn.addEventListener('click', () => {
+      document.getElementById('tarif').value = plans[i];
+    });
+  });
+
+  // ── Form submit → Google Sheets ──
+  // MUHIM: quyidagi SCRIPT_URL ni o'zingizning Google Apps Script URL bilan almashtiring
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxgYgl6TWytZzwozVOCK_2VzvHh2IbFgoo8kUXniH_npjp9gj_o5VUeXYlZHqCY1fK59g/exec';
+
+  async function submitForm() {
+    const fname    = document.getElementById('fname').value.trim();
+    const phone    = document.getElementById('phone').value.trim();
+    const email    = document.getElementById('email').value.trim();
+    const business = document.getElementById('business').value.trim();
+    const tarif    = document.getElementById('tarif').value;
+    const msg      = document.getElementById('msg').value.trim();
+    const msgEl    = document.getElementById('form-msg');
+    const btn      = document.getElementById('submitBtn');
+
+    if (!fname || !phone || !email) {
+      msgEl.className = 'error';
+      msgEl.textContent = '⚠️ Iltimos, majburiy maydonlarni to\'ldiring.';
+      msgEl.style.display = 'block';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Yuborilmoqda...';
+    msgEl.style.display = 'none';
+
+    const payload = { fname, phone, email, business, tarif, msg, date: new Date().toLocaleString('uz-UZ') };
+
+    try {
+      const formData = new URLSearchParams();
+      Object.entries(payload).forEach(([k, v]) => formData.append(k, v));
+
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: formData
+      });
+      msgEl.className = 'success';
+      msgEl.textContent = '✅ Arizangiz muvaffaqiyatli yuborildi! 24 soat ichida bog\'lanamiz.';
+      ['fname','phone','email','business','msg'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('tarif').value = '';
+    } catch (err) {
+      msgEl.className = 'error';
+      msgEl.textContent = '❌ Xatolik yuz berdi. Iltimos, qayta urinib ko\'ring.';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Ariza yuborish →';
+    }
+  }
+</script>
+</body>
+</html>
